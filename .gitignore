@@ -1,0 +1,13 @@
+# pxelinux binaries
+*.c32
+*.0
+*.efi
+*.elf
+*.e64
+memdisk
+
+# Symlinks
+efi.x64/pxelinux.cfg
+
+# hdt supplementary files
+bios/hdt
