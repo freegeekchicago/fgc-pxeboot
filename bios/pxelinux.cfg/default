@@ -1,0 +1,175 @@
+INCLUDE pxelinux.cfg/fgc_head.cfg
+
+# Time outs are multiples of 1/10 of a second. 10 would equal 1 second.
+TIMEOUT 1200
+TOTALTIMEOUT 4800
+ONTIMEOUT memtest86+
+MENU AUTOBOOT Boot to memtest86+ in # second{,s}...
+#ONTIMEOUT xubuntu-trusty
+#MENU AUTOBOOT Boot to Xubuntu Install in # second{,s}...
+
+
+#####################
+### Testing Tools ###
+#####################
+
+MENU BEGIN Testing Tools
+MENU TITLE Testing Tools
+
+LABEL pmagic
+    MENU LABEL Parted Magic 2015-01-13
+    LINUX memdisk
+    INITRD http://fgc-nfs.lan.freegeekchicago.org/isos/pmagic/pmagic_2015_01_13.iso
+    APPEND iso 
+    TEXT HELP
+    Secure Erase Disks and run SMART Tests.
+    Use this to prepare a disk for reuse.
+    ENDTEXT
+
+LABEL memtest86+
+    MENU LABEL Memtest86+ v5.01
+    KERNEL http://fgc-nfs.lan.freegeekchicago.org/isos/memtest86+/memtest86+-5.01
+    ### Download new images from http://www.memtest.org/#downiso
+    TEXT HELP
+    Test RAM.  It will continue forever, but you can stop when the
+    "passes" column reaches "1" or more.  If the "errors" column is
+    "0", then the test passed.
+    ENDTEXT
+
+LABEL hdt
+    MENU LABEL Hardware Detection Tool
+    COM32 hdt.c32
+    APPEND pciids=pci.ids
+    TEXT HELP
+    Display the CPU speed, RAM size, and hard drive sizes.
+    ENDTEXT
+
+LABEL ubcd
+    MENU LABEL Ultimate Boot CD 
+    KERNEL memdisk
+    INITRD http://fgc-nfs.lan.freegeekchicago.org/isos/ubcd/ubcd533.iso
+    # Download new images from https://www.ultimatebootcd.com/download.html
+    APPEND iso
+
+LABEL testing
+    MENU LABEL Additional Testing
+    KERNEL vesamenu.c32
+    APPEND pxelinux.cfg/testing.cfg
+    TEXT HELP
+    Additional testing tools that aren't needed on a daily basis by most volunteers.
+    ENDTEXT
+
+LABEL testing-up
+    MENU LABEL ../ Back to Main Menu
+    MENU INDENT 1
+    MENU EXIT
+
+MENU END
+
+
+########################
+### OS Installations ###
+########################
+
+MENU BEGIN OS Installations
+MENU TITLE OS Installations
+
+LABEL kubuntu-trusty
+    MENU LABEL Install KUbuntu v14.04 64-Bit
+    KERNEL http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/trusty/mini/linux
+    APPEND http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/trusty/mini/initrd.gz auto=true priority=critical interface=eth0 netcfg/get_hostname=freegeekchicago url=http://fgc-nfs.lan.freegeekchicago.org/preseed/kubuntu_trusty.seed --
+    TEXT HELP
+    Install KUbuntu v14.04 64-bit w/ Preseed (Automated Install)
+    ENDTEXT
+
+LABEL xubuntu-trusty
+    MENU LABEL Install XUbuntu v14.04 64-Bit
+    KERNEL http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/trusty/mini/linux
+    APPEND http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/trusty/mini/initrd.gz auto=true priority=critical interface=eth0 netcfg/get_hostname=freegeekchicago url=http://fgc-nfs.lan.freegeekchicago.org/preseed/xubuntu_trusty.seed --
+    TEXT HELP
+    Install KUbuntu v14.04 64-bit w/ Preseed (Automated Install)
+    ENDTEXT
+
+LABEL installs
+    MENU LABEL Additional Installations
+    KERNEL vesamenu.c32
+    APPEND pxelinux.cfg/installs.cfg
+    TEXT HELP
+    Additional installation options that aren't needed on a daily basis by most volunteers.
+    ENDTEXT
+
+LABEL installs-up
+    MENU LABEL ../ Back to Main Menu
+    MENU INDENT 1
+    MENU EXIT
+
+MENU END
+
+#################
+### LIVE BOOT ###
+#################
+
+MENU BEGIN Live OS Boot
+MENT TITLE Live OS Boot
+
+### TRUSTY ###
+
+LABEL -
+    MENU LABEL 14.04 Trusty
+    MENU DISABLE
+
+LABEL -
+    MENU LABEL Live XUbuntu 14.04 64-bit  -- kernel 3.13.0
+    KERNEL http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/xubuntu/trusty/mount/casper/vmlinuz.efi
+    APPEND initrd=http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/xubuntu/trusty/mount/casper/initrd.lz boot=casper netboot=nfs4 nfsroot=10.10.7.23:/nfsroot/isos/x86_64/xubuntu/trusty/mount quiet splash
+    TEXT HELP
+    Run a live session of XUbuntu v14.04.
+    ENDTEXT
+
+LABEL -
+    MENU LABEL Live KUbuntu 14.04 64-bit  -- kernel 3.13
+    KERNEL http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/kubuntu/trusty/mount/casper/vmlinuz.efi
+    APPEND initrd=http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/kubuntu/trusty/mount/casper/initrd.lz boot=casper netboot=nfs4 nfsroot=10.10.7.23:/nfsroot/isos/x86_64/kubuntu/trusty/mount quiet splash
+    TEXT HELP
+    Run a live session of KUbuntu v14.04.
+    ENDTEXT
+
+
+
+### LUCID ###
+
+LABEL -
+    MENU LABEL Live Ubuntu 10.04 64-bit  -- kernel ??
+    KERNEL http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/lucid/mount/casper/vmlinuz
+    APPEND boot=casper netboot=nfs nfsroot=10.10.7.23:/nfsroot/isos/x86_64/ubuntu/lucid/mount initrd=http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/lucid/mount/casper/initrd.lz -- splash
+    TEXT HELP
+    Run a live session of Ubuntu v10.04.
+    ENDTEXT
+
+### PRECISE ###
+
+LABEL -
+    MENU LABEL Live XUbuntu 12.04 64-bit  -- kernel ??
+    KERNEL http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/xubuntu/precise/mount/casper/vmlinuz.efi
+    APPEND boot=casper netboot=nfs nfsroot=10.10.7.23:/nfsroot/isos/x86_64/xubuntu/precise/mount initrd=http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/xubuntu/precise/mount/casper/vmlinuz.efi -- quiet splash
+    TEXT HELP
+    Run a live session of XUbuntu v12.04.
+    ENDTEXT
+
+MENU SEPARATOR
+
+LABEL liveos
+    MENU LABEL Live OS Boot
+    KERNEL vesamenu.c32
+    APPEND pxelinux.cfg/liveos.cfg
+    TEXT HELP
+    Boot one of our many Live Operating Systems
+    ENDTEXT
+
+LABEL liveos-up
+    MENU LABEL ../ Back to Main Menu
+    MENU INDENT 1
+    MENU EXIT
+
+MENU END
+
