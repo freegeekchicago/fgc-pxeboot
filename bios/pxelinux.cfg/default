@@ -77,7 +77,7 @@ MENU TITLE OS Installations
 LABEL kubuntu-trusty
     MENU LABEL Install KUbuntu v14.04 64-Bit
     KERNEL http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/trusty/mini/linux
-    APPEND initrd=http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/trusty/mini/initrd.gz auto=true priority=critical interface=eth0 netcfg/get_hostname=freegeekchicago url=http://fgc-nfs.lan.freegeekchicago.org/preseed/kubuntu_trusty.seed --
+    APPEND initrd=http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/trusty/mini/initrd.gz auto=true priority=critical netcfg/choose_interface=auto netcfg/get_hostname=freegeekchicago url=http://fgc-nfs.lan.freegeekchicago.org/preseed/kubuntu_trusty.seed --
     TEXT HELP
     Install KUbuntu v14.04 64-bit w/ Preseed (Automated Install)
     ENDTEXT
@@ -85,7 +85,7 @@ LABEL kubuntu-trusty
 LABEL xubuntu-trusty
     MENU LABEL Install XUbuntu v14.04 64-Bit
     KERNEL http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/trusty/mini/linux
-    APPEND initrd=http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/trusty/mini/initrd.gz auto=true priority=critical interface=eth0 netcfg/get_hostname=freegeekchicago url=http://fgc-nfs.lan.freegeekchicago.org/preseed/xubuntu_trusty.seed --
+    APPEND initrd=http://fgc-nfs.lan.freegeekchicago.org/isos/x86_64/ubuntu/trusty/mini/initrd.gz auto=true priority=critical netcfg/choose_interface=auto netcfg/get_hostname=freegeekchicago url=http://fgc-nfs.lan.freegeekchicago.org/preseed/xubuntu_trusty.seed --
     TEXT HELP
     Install XUbuntu v14.04 64-bit w/ Preseed (Automated Install)
     ENDTEXT
