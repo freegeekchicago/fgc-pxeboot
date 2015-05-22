@@ -36,6 +36,17 @@ LABEL memtest86+
     "0", then the test passed.
     ENDTEXT
 
+LABEL ipdt
+    MENU LABEL Intel Processor Diagnostic Tool (Fedora 20 64-bit)
+    MENU DISABLE
+# ReEnable when we figure out how dracut boots properly from an nfs share
+    KERNEL http://fgc-nfs.lan.freegeekchicago.org/isos/IPDT/mount/isolinux/vmlinuz0
+    APPEND initrd=http://fgc-nfs.lan.freegeekchicago.org/isos/IPDT/mount/isolinux/initrd0.img boot=LiveOS root=nfs:10.10.7.23:/nfsroot/isos/IPDT/mount
+    TEXT HELP
+    Run a live session of Fedora and diagnose Intel Processors.
+    ENDTEXT
+
+
 LABEL hdt
     MENU LABEL Hardware Detection Tool
     COM32 hdt.c32
